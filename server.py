@@ -12,14 +12,12 @@ try:
 	s.bind((host, port))
 except socket.error as e:
 	print(str(e))
-
+print("Server IP: {}\n Port: {}".format(host,port))
 s.listen(5)
 print('Waiting for a connection.')
 def threaded_client(conn):
 	conn.send(str.encode('Welcome, type your info\n'))
-	i = 1
 	while True:
-		i = i+1 
 		data = conn.recv(2048)
 		if not data:
 			break	  
@@ -28,17 +26,21 @@ def threaded_client(conn):
 				data = pickle.loads(data)
 			except pickle.UnpicklingError:
 				data = "nokeys"
-
 			if data != "nokeys":
 				print(data)
 				#call input function 
 	conn.close()
 
+<<<<<<< HEAD
 def handleInput(data):
 	pass
-while True:
+=======
+def inputFunction(data):
+	for i in data:
+		pass
 
+>>>>>>> a5efc374b9707089ba6ee754059df31076138444
+while True:
 	conn, addr = s.accept()
 	print('connected to: '+addr[0]+':'+str(addr[1]))
-
 	start_new_thread(threaded_client,(conn,))
