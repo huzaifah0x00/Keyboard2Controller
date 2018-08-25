@@ -1,3 +1,4 @@
+#include <ctime>
 #include <Windows.h>
 #include <iostream>
 #include <typeinfo>
@@ -14,19 +15,24 @@ int main()
 	VK_F4
 	};
 
-
 	#define NUM(virtualCodes) (sizeof(virtualCodes) / sizeof(*virtualCodes))
 
 	cout << NUM(virtualCodes);
 	cout << typeid(VK_UP).name();
+	// time_t current_time;
+	// time_t lasttime;
 	for( ; ; )
-	{ 
+
+	{
+		current_time = time(NULL); 
 		int i =0 ; for (i=0; i <NUM(virtualCodes); i++)
 		{
  			if(GetAsyncKeyState(virtualCodes[i]))
  			{
  				cout << "Key Pressed: " << virtualCodes[i] <<  "" << endl;
+ 				// cout << time(NULL) << endl;
  			} 		// cout << "bla" << endl; 	} }
+
 		}
 	}
 }
