@@ -2,7 +2,8 @@ import pickle
 import socket
 import sys
 from _thread import *
-
+import pyvjoy 
+j = pyvjoy.VJoyDevice(1)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
@@ -33,7 +34,8 @@ def threaded_client(conn):
 				#call input function 
 	conn.close()
 
-
+def handleInput(data):
+	pass
 while True:
 
 	conn, addr = s.accept()

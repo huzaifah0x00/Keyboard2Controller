@@ -5,11 +5,12 @@ import sys
 print(sys.argv)
 s = socket.socket()
 if len(sys.argv) == 3:
-	host = sys.argv[1]
+	host = socket.gethostbyname(sys.argv[1])
 	port = int(sys.argv[2])
 else:
 	host = socket.gethostname()
 	port = 64129
+print("Connecting to host: {} on port: {}".format(host,port))
 i =  0
 s.connect((host,port))
 while True:
