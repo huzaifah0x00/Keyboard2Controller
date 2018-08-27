@@ -1,3 +1,4 @@
+import time 
 import pickle
 import socket
 import sys
@@ -14,26 +15,22 @@ class Xbox:
 	def Y():
 		print(dir(j))
 	def LsUp():
-		j.data.wAxisX = 0x8000
-		j.update()
+		j.set_axis(pyvjoy.HID_USAGE_Y, 0x1)
 	def LsRight():
-		j.data.wAxisY = 0x8000
-		j.update()
+		j.set_axis(pyvjoy.HID_USAGE_X, 0x8000)
 	def LsLeft():
-		j.data.wAxisY = 0x1
-		j.update()
+		j.set_axis(pyvjoy.HID_USAGE_X, 0x1)
 	def LsDown():
-		j.data.wAxisX = 0x1
-		j.update()
+		j.set_axis(pyvjoy.HID_USAGE_Y, 0x8000)
 	def LsReset():
-		j.data.wAxisX = 0x4000
-		j.data.wAxisY = 0x4000
-		j.data.wAxisY = 0x4000
-		j.data.wAxisY = 0x4000
-		j.update()
+		j.set_axis(pyvjoy.HID_USAGE_Y, 0x4000)
+		j.set_axis(pyvjoy.HID_USAGE_X, 0x4000)
+		j.set_axis(pyvjoy.HID_USAGE_X, 0x4000)
+		j.set_axis(pyvjoy.HID_USAGE_Y, 0x4000)
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
-port = 64129
+port = 4444
 try:
 	s.bind((host, port))
 except socket.error as e:
@@ -45,7 +42,7 @@ def threaded_client(conn):
 	conn.send(str.encode('Welcome, type your info\n'))
 	while True:
 		data = conn.recv(2048)
-		print("data in ONE CHUCNK = [{}] ".format(data))
+		# print("data in ONE CHUCNK = [{}] ".format(data))
 		if not data:
 			break	  
 		else:
@@ -60,19 +57,33 @@ def threaded_client(conn):
 
 
 def handleInput(data):
-	while True:
-		if vk['UP'] in data:
-			print("UP 'cause the data is [{}]".format(data))
+	for i in data:
+		time.sleep(0.05)
+		if vk['UP'] == i:
+			print("UP 'cause the data is [{}] and i is [{}]".format(data,i))
 			Xbox.LsUp()
-		if vk['LEFT'] in data:
-			print("LEFT")
+			time.sleep(0.05)
+			Xbox.LsReset()
+
+		if vk['LEFT'] == i:
+			print("LEFT 'cause the data is [{}] and i is [{}]".format(data,i))
 			Xbox.LsLeft()
-		if vk['RIGHT'] in data:
-			print("RIGHT")
+			time.sleep(0.05)
+			Xbox.LsReset()
+
+		if vk['RIGHT'] == i:
+			print("RIGHT 'cause the data is [{}] and i is [{}]".format(data,i))
+
 			Xbox.LsRight()
-		if vk['DOWN'] in data:
-			print("DOWN")
+			time.sleep(0.05)
+			Xbox.LsReset()
+
+		if vk['DOWN'] == i:
+			print("DOWN 'cause the data is [{}] and i is [{}]".format(data,i))
 			Xbox.LsDown()
+			time.sleep(0.05)
+			Xbox.LsReset()
+
 		else:
 			Xbox.LsReset()
 		# j.reset()
