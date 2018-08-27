@@ -3,7 +3,8 @@ import socket
 import sys
 from getkeys import vk
 from _thread import *
-import pyvjoy 
+import pyvjoy
+RESTAXIS = 0x4000
 j = pyvjoy.VJoyDevice(1)
 def B(power):
 	j.set_button(2,1)
@@ -18,8 +19,17 @@ def Up():
 def Right():
 	j.data.wAxisY = 0x8000
 	j.update()
+def Left():
+	j.data.wAxisY = -0x8000
+	j.update()
 def Down():
-	j.data.wAxisX = 0x1
+	j.data.wAxisX = -0x8000
+	j.update()
+def Reset():
+	j.data.wAxisX = RESTAXIS
+	j.data.wAxisY = RESTAXIS
+	j.data.wAxisY = RESTAXIS
+	j.data.wAxisY = RESTAXIS
 	j.update()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
@@ -43,21 +53,29 @@ def threaded_client(conn):
 			except pickle.UnpicklingError:
 				data = "nokeys"
 			if data != "nokeys":
-				print(data)
+				handleInput(data)
 				#call input function 
 	conn.close()
 
-<<<<<<< HEAD
+
 def handleInput(data):
-	pass
-=======
-def inputFunction(data):
 	for i in data:
 		if vk['UP'] in data:
 			print("UP")
-			UP()
-
->>>>>>> a5efc374b9707089ba6ee754059df31076138444
+			Up()
+		if vk['LEFT'] in data:
+			print("LEFT")
+			Left()
+		if vk['RIGHT'] in data:
+			print("RIGHT")
+			Right()
+		if vk['DOWN'] in data:
+			print("DOWN")
+			Down()
+		Reset()
+		# j.reset()
+		# j.reset_buttons()
+		# j.reset_povs()
 while True:
 	conn, addr = s.accept()
 	print('connected to: '+addr[0]+':'+str(addr[1]))
