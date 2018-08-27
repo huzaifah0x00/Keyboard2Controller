@@ -47,12 +47,17 @@ def threaded_client(conn):
 				#call input function 
 	conn.close()
 
+<<<<<<< HEAD
+def handleInput(data):
+	pass
+=======
 def inputFunction(data):
 	for i in data:
 		if vk['UP'] in data:
 			print("UP")
 			UP()
 
+>>>>>>> a5efc374b9707089ba6ee754059df31076138444
 while True:
 	conn, addr = s.accept()
 	print('connected to: '+addr[0]+':'+str(addr[1]))
