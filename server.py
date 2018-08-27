@@ -1,10 +1,26 @@
 import pickle
 import socket
 import sys
+from getkeys import vk
 from _thread import *
 import pyvjoy 
 j = pyvjoy.VJoyDevice(1)
-
+def B(power):
+	j.set_button(2,1)
+	print(power*0.005)
+	time.sleep(power*0.005)
+	j.set_button(2,0)
+def Y():
+	print(dir(j))
+def Up():
+	j.data.wAxisX = 0x8000
+	j.update()
+def Right():
+	j.data.wAxisY = 0x8000
+	j.update()
+def Down():
+	j.data.wAxisX = 0x1
+	j.update()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
 port = 64129
@@ -33,7 +49,9 @@ def threaded_client(conn):
 
 def inputFunction(data):
 	for i in data:
-		pass
+		if vk['UP'] in data:
+			print("UP")
+			UP()
 
 while True:
 	conn, addr = s.accept()

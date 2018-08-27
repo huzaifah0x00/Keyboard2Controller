@@ -122,3 +122,5 @@ def getKeys():
         if wapi.GetAsyncKeyState(key):
             keys.append(key)
     return keys
+if __name__ == '__main__':
+    getKeys()
