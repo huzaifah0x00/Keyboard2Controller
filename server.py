@@ -4,33 +4,33 @@ import sys
 from getkeys import vk
 from _thread import *
 import pyvjoy
-RESTAXIS = 0x4000
 j = pyvjoy.VJoyDevice(1)
-def B(power):
-	j.set_button(2,1)
-	print(power*0.005)
-	time.sleep(power*0.005)
-	j.set_button(2,0)
-def Y():
-	print(dir(j))
-def Up():
-	j.data.wAxisX = 0x8000
-	j.update()
-def Right():
-	j.data.wAxisY = 0x8000
-	j.update()
-def Left():
-	j.data.wAxisY = -0x8000
-	j.update()
-def Down():
-	j.data.wAxisX = -0x8000
-	j.update()
-def Reset():
-	j.data.wAxisX = RESTAXIS
-	j.data.wAxisY = RESTAXIS
-	j.data.wAxisY = RESTAXIS
-	j.data.wAxisY = RESTAXIS
-	j.update()
+class Xbox:
+	def B(power):
+		j.set_button(2,1)
+		print(power*0.005)
+		time.sleep(power*0.005)
+		j.set_button(2,0)
+	def Y():
+		print(dir(j))
+	def LsUp():
+		j.data.wAxisX = 0x8000
+		j.update()
+	def LsRight():
+		j.data.wAxisY = 0x8000
+		j.update()
+	def LsLeft():
+		j.data.wAxisY = 0x1
+		j.update()
+	def LsDown():
+		j.data.wAxisX = 0x1
+		j.update()
+	def LsReset():
+		j.data.wAxisX = 0x4000
+		j.data.wAxisY = 0x4000
+		j.data.wAxisY = 0x4000
+		j.data.wAxisY = 0x4000
+		j.update()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
 port = 64129
@@ -45,6 +45,7 @@ def threaded_client(conn):
 	conn.send(str.encode('Welcome, type your info\n'))
 	while True:
 		data = conn.recv(2048)
+		print("data in ONE CHUCNK = [{}] ".format(data))
 		if not data:
 			break	  
 		else:
@@ -59,20 +60,21 @@ def threaded_client(conn):
 
 
 def handleInput(data):
-	for i in data:
+	while True:
 		if vk['UP'] in data:
-			print("UP")
-			Up()
+			print("UP 'cause the data is [{}]".format(data))
+			Xbox.LsUp()
 		if vk['LEFT'] in data:
 			print("LEFT")
-			Left()
+			Xbox.LsLeft()
 		if vk['RIGHT'] in data:
 			print("RIGHT")
-			Right()
+			Xbox.LsRight()
 		if vk['DOWN'] in data:
 			print("DOWN")
-			Down()
-		Reset()
+			Xbox.LsDown()
+		else:
+			Xbox.LsReset()
 		# j.reset()
 		# j.reset_buttons()
 		# j.reset_povs()
