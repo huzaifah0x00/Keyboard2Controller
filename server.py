@@ -58,25 +58,48 @@ def threaded_client(conn):
 def handleInput(data):
 	for i in data:
 		# time.sleep(0.001) 
+		
 		if vk['UP'] in data:
-			print("UP 'cause the data is [{}] and i is [{}]".format(data,i))
-			vjoy.lsUp()
-			# time.sleep(0.05)
-			# vjoy.LsReset()
-		if vk['LEFT'] in data :
-			print("LEFT 'cause the data is [{}] and i is [{}]".format(data,i))
-			vjoy.lsLeft()
-			# time.sleep(0.05)
+			if vk['UP'] and vk['RIGHT'] in data:
+				vjoy.lsUpRight()
+			elif vk['UP'] and vk['LEFT'] in data:
+				vjoy.lsUpLeft()
+			
+			else:
+				print("UP 'cause the data is [{}] and i is [{}]".format(data,i))
+				start_new_thread(vjoy.lsUp,())
+			time.sleep(0.05)
 			# vjoy.LsReset()
 		if vk['DOWN'] in data:
-			print("DOWN 'cause the data is [{}] and i is [{}]".format(data,i))
-			vjoy.lsDown()
-			# time.sleep(0.05)
+			if vk['DOWN'] and vk['RIGHT'] in data:
+				vjoy.lsDownRight()
+			elif vk['DOWN'] and vk['LEFT'] in data:
+				vjoy.lsDownLeft()
+			else:
+				print("DOWN 'cause the data is [{}] and i is [{}]".format(data,i))
+				start_new_thread(vjoy.lsDown,())
+			time.sleep(0.05)
+		if vk['LEFT'] in data :
+			if vk['LEFT'] and vk['DOWN'] in data:
+				vjoy.lsDownLeft()
+			elif vk['LEFT'] and vk['UP'] in data:
+				vjoy.lsUpLeft()
+			else:
+				print("LEFT 'cause the data is [{}] and i is [{}]".format(data,i))
+				start_new_thread(vjoy.lsLeft,())
+			time.sleep(0.05)
+			# vjoy.LsReset()
+		
 		if vk['RIGHT'] in data:
-			print("RIGHT 'cause the data is [{}] and i is [{}]".format(data,i))
+			if vk['RIGHT'] and vk['DOWN'] in data:
+				vjoy.lsDownRight()
+			elif vk['RIGHT'] and vk['UP'] in data:
+				vjoy.lsUpRight()
+			else:
+				print("RIGHT 'cause the data is [{}] and i is [{}]".format(data,i))
+				start_new_thread(vjoy.lsRight,())
+			time.sleep(0.05)
 
-			vjoy.lsRight()
-			# time.sleep(0.05)
 			# vjoy.LsReset()
 		# if vk['DOWN'] == i:
 		# 	print("DOWN 'cause the data is [{}] and i is [{}]".format(data,i))

@@ -123,7 +123,7 @@ def lsUp():
     #     joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
     #     vj.update(joystickPosition)
     #     time.sleep( 0.01 )
-    joystickPosition = vj.generateJoystickPosition(wAxisY = 0x8000)
+    joystickPosition = vj.generateJoystickPosition(wAxisY = 0x1)
     vj.update(joystickPosition)
     time.sleep( 0.01 )
     # joystickPosition = vj.generateJoystickPosition(wAxisX = 0x4000, wAxisY = 0x4000)
@@ -140,7 +140,7 @@ def lsDown():
     #     joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
     #     vj.update(joystickPosition)
     #     time.sleep( 0.01 )
-    joystickPosition = vj.generateJoystickPosition(wAxisY = 0x1)
+    joystickPosition = vj.generateJoystickPosition(wAxisY = 0x8000)
     vj.update(joystickPosition)
     time.sleep( 0.01 )
     # joystickPosition = vj.generateJoystickPosition(wAxisX = 0x4000, wAxisY = 0x4000)
@@ -182,13 +182,34 @@ def lsRight():
     # vj.sendButtons(0)
     # print("vj closing", flush=True)
     vj.close()
+def lsUpRight():
+	vj.open()
+	joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000, wAxisY = 0x1)
+	vj.update(joystickPosition)
+	time.sleep( 0.01 )
+def lsDownRight():
+	vj.open()
+	joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000, wAxisY = 0x8000)
+	vj.update(joystickPosition)
+	time.sleep( 0.01 )
+def lsUpLeft():
+	vj.open()
+	joystickPosition = vj.generateJoystickPosition(wAxisX = 0x1, wAxisY = 0x1)
+	vj.update(joystickPosition)
+	time.sleep( 0.01 )
+def lsDownLeft():
+	vj.open()
+	joystickPosition = vj.generateJoystickPosition(wAxisX = 0x1, wAxisY = 0x8000)
+	vj.update(joystickPosition)
+	time.sleep( 0.01 )
+
 def ultimate_release():
     vj.open()
     joystickPosition = vj.generateJoystickPosition()
     vj.update(joystickPosition)
     time.sleep(0.001)
     vj.close()
-    
+
 
 
 if __name__ == '__main__':
