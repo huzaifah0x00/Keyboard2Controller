@@ -9,8 +9,8 @@ j = pyvjoy.VJoyDevice(1)
 class Xbox:
 	def B(power):
 		j.set_button(2,1)
-		print(power*0.005)
-		time.sleep(power*0.005)
+		print(power*0.001)
+		time.sleep(power*0.001)
 		j.set_button(2,0)
 	def Y():
 		print(dir(j))
@@ -53,35 +53,36 @@ def threaded_client(conn):
 			if data != "nokeys":
 				handleInput(data)
 				#call input function 
+			lastdata = data
 	conn.close()
 
 
 def handleInput(data):
 	for i in data:
-		time.sleep(0.05)
+		time.sleep(0.001)
 		if vk['UP'] == i:
 			print("UP 'cause the data is [{}] and i is [{}]".format(data,i))
 			Xbox.LsUp()
-			time.sleep(0.05)
+			time.sleep(0.001)
 			Xbox.LsReset()
 
 		if vk['LEFT'] == i:
 			print("LEFT 'cause the data is [{}] and i is [{}]".format(data,i))
 			Xbox.LsLeft()
-			time.sleep(0.05)
+			time.sleep(0.001)
 			Xbox.LsReset()
 
 		if vk['RIGHT'] == i:
 			print("RIGHT 'cause the data is [{}] and i is [{}]".format(data,i))
 
 			Xbox.LsRight()
-			time.sleep(0.05)
+			time.sleep(0.001)
 			Xbox.LsReset()
 
 		if vk['DOWN'] == i:
 			print("DOWN 'cause the data is [{}] and i is [{}]".format(data,i))
 			Xbox.LsDown()
-			time.sleep(0.05)
+			time.sleep(0.001)
 			Xbox.LsReset()
 
 		else:
