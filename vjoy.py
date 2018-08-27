@@ -1,3 +1,13 @@
+# step 1: https://sourceforge.net/projects/vjoystick/files/latest/download
+# step 2: SDK: http://vjoystick.sourceforge.net/site/index.php/component/weblinks/weblink/13-uncategorised/11-redirect-vjoy2sdk?task=weblink.go
+# step 3: CONST_DLL_VJOY = "vJoyInterface.dll" ...KEEP .DLL local? 
+# step 4: http://www.x360ce.com/, 64 bit download
+# step 5: extract, copy to gtav directory
+# step 6: run, should auto-detect vjoy, test with example make sure it works.
+# step 7: CLOSE the app, run game. Test with example to see if works.
+
+# SOURCE: https://gist.github.com/Flandan/fdadd7046afee83822fcff003ab47087#file-vjoy-py
+
 import ctypes
 import struct, time
 import numpy as np
@@ -27,10 +37,10 @@ class vJoy(object):
         wThrottle = 0, wRudder = 0, wAileron = 0,
 
         # left thb x        left thb y     left trigger
-        wAxisX = 16393,   wAxisY = 16393,   wAxisZ = 0,
+        wAxisX = 0x4000,   wAxisY = 0x4000,   wAxisZ = 0,
 
         # right thb x       right thb y        right trigger
-        wAxisXRot = 16393, wAxisYRot = 16393, wAxisZRot = 0,
+        wAxisXRot = 0x4000, wAxisYRot = 0x4000, wAxisZRot = 0,
 
         # ???         ???        ???
         wSlider = 0, wDial = 0, wWheel = 0,
@@ -104,119 +114,74 @@ def setJoy(valueX, valueY, scale):
     joystickPosition = vj.generateJoystickPosition(wAxisX = 16000+xPos, wAxisY = 16000+yPos)
     vj.update(joystickPosition)
 
-
-def test():
+def lsUp():
     vj.open()
     print("vj opening", flush=True)
-    btn = 1
-    time.sleep(2)
+    #time.sleep(2)
     print("sending axes", flush=True)
-    for i in range(0,1000,1):
-        #vj.sendButtons( btn << i )
-        xPos = int(10000.0*np.sin(2.0*np.pi*i/1000))
-        yPos = int(10000.0*np.sin(2.0*np.pi*i/100))
-        print(xPos, flush=True)
-        joystickPosition = vj.generateJoystickPosition(wAxisX = 16000+xPos, wAxisY = 16000+yPos)
-        vj.update(joystickPosition)
-        time.sleep( 0.01 )
-    joystickPosition = vj.generateJoystickPosition(wAxisX = 16000, wAxisY = 16000)
+    # for i in range(0,1000,1):
+    #     joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
+    #     vj.update(joystickPosition)
+    #     time.sleep( 0.01 )
+    joystickPosition = vj.generateJoystickPosition(wAxisY = 0x8000)
     vj.update(joystickPosition)
-    vj.sendButtons(0)
-    print("vj closing", flush=True)
+    time.sleep( 0.01 )
+    # joystickPosition = vj.generateJoystickPosition(wAxisX = 0x4000, wAxisY = 0x4000)
+    # vj.update(joystickPosition)
+    # vj.sendButtons(0)
+    # print("vj closing", flush=True)
     vj.close()
-    
-
-def test2():
-    time.sleep(3)
-    print("vj opening", flush=True)
-    vj.open()
-
-    time.sleep(1)
-
-    print("sending axes", flush=True)
-
-    # valueX, valueY between -1.0 and 1.0
-    # scale between 0 and 16000
-    scale = 10000.0
-    for i in range(0,1000,1):
-        xPos = np.sin(2.0*np.pi*i/1000)
-        yPos = np.sin(2.0*np.pi*i/100)
-        setJoy(xPos, yPos, scale)
-        time.sleep(0.01)
-
-    print("vj closing", flush=True)
-    
-    reset = vj.generateJoystickPosition()
-    setJoy(0, 0, scale)
-    vj.close()
-
-
-
-def test3():
-    time.sleep(3)
+def lsDown():
     vj.open()
     print("vj opening", flush=True)
-    time.sleep(2)
+    #time.sleep(2)
     print("sending axes", flush=True)
-    joystickPosition = vj.generateJoystickPosition(wThrottle = 32000, wAxisX = 16000, wAxisY = 16000)
+    # for i in range(0,1000,1):
+    #     joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
+    #     vj.update(joystickPosition)
+    #     time.sleep( 0.01 )
+    joystickPosition = vj.generateJoystickPosition(wAxisY = 0x1)
     vj.update(joystickPosition)
-    time.sleep(5)
-    joystickPosition = vj.generateJoystickPosition()
-    vj.update(joystickPosition)
-    #vj.sendButtons(0)
-    print("vj closing", flush=True)
+    time.sleep( 0.01 )
+    # joystickPosition = vj.generateJoystickPosition(wAxisX = 0x4000, wAxisY = 0x4000)
+    # vj.update(joystickPosition)
+    # vj.sendButtons(0)
+    # print("vj closing", flush=True)
     vj.close()
-
-
-
-
-    
-# DOES change view. 
-def test5():
-    time.sleep(3)
+def lsLeft():
     vj.open()
     print("vj opening", flush=True)
-    time.sleep(2)
+    #time.sleep(2)
     print("sending axes", flush=True)
-    joystickPosition = vj.generateJoystickPosition(wAxisX = 8000, wAxisY = 16000)
+    # for i in range(0,1000,1):
+    #     joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
+    #     vj.update(joystickPosition)
+    #     time.sleep( 0.01 )
+    joystickPosition = vj.generateJoystickPosition(wAxisX = 0x1)
     vj.update(joystickPosition)
-    time.sleep(5)
-    joystickPosition = vj.generateJoystickPosition(wAxisX = 16000, wAxisY = 16000)
-    vj.update(joystickPosition)
-    #vj.sendButtons(0)
-    print("vj closing", flush=True)
-    vj.close()
-    
-
-
-
-
-def look_left():
+    time.sleep( 0.01 )
+    # joystickPosition = vj.generateJoystickPosition(wAxisX = 0x4000, wAxisY = 0x4000)
+    # vj.update(joystickPosition)
+    # vj.sendButtons(0)
+    # print("vj closing", flush=True)
+    vj.close()   
+def lsRight():
     vj.open()
-    joystickPosition = vj.generateJoystickPosition(wAxisXRot = 0)
+    print("vj opening", flush=True)
+    #time.sleep(2)
+    print("sending axes", flush=True)
+    # for i in range(0,1000,1):
+    #     joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
+    #     vj.update(joystickPosition)
+    #     time.sleep( 0.01 )
+    joystickPosition = vj.generateJoystickPosition(wAxisX = 0x8000)
     vj.update(joystickPosition)
+    time.sleep( 0.01 )
+    # joystickPosition = vj.generateJoystickPosition(wAxisX = 16000, wAxisY = 16000)
+    # vj.update(joystickPosition)
+    # vj.sendButtons(0)
+    # print("vj closing", flush=True)
     vj.close()
-
-def look_right():
-    vj.open()
-    joystickPosition = vj.generateJoystickPosition(wAxisXRot = 32786)
-    vj.update(joystickPosition)
-    vj.close()
-
-def throttle():
-    vj.open()
-    joystickPosition = vj.generateJoystickPosition(wAxisZRot = 32786)
-    vj.update(joystickPosition)
-    vj.close()
-
-
-def reverse_brake():
-    vj.open()
-    joystickPosition = vj.generateJoystickPosition(wAxisZ = 32786)
-    vj.update(joystickPosition)
-    vj.close()
-    
-
 def ultimate_release():
     vj.open()
     joystickPosition = vj.generateJoystickPosition()
@@ -227,13 +192,16 @@ def ultimate_release():
 
 
 if __name__ == '__main__':
-
+    ultimate_release()
     for i in reversed(range(1,4)):
         print(i)
         time.sleep(1)
     
     for i in range(200):
-        test()
-
+        lsLeft()
+        time.sleep(0.01)
 
     ultimate_release()
+
+    
+        
