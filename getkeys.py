@@ -110,6 +110,8 @@ vk = {
     "PERIOD":      0xBE,       
     "SLASH":        0xBF,      
 }
+kv = {v: k for k, v in vk.items()}
+
 
 keyList = []
 for char in vk:
@@ -122,7 +124,7 @@ def getKeys():
         keystate = wapi.GetAsyncKeyState(key)
         if keystate or not keystate:
             # keys.append(key)
-            print(keystate,key)
+            print(keystate,kv[key])
     return keys
 if __name__ == '__main__':
     while True:
