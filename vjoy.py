@@ -11,7 +11,6 @@
 import ctypes
 import struct, time
 import numpy as np
-
 CONST_DLL_VJOY = "vJoyInterface.dll"
 
 class vJoy(object):

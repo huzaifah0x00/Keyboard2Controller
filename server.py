@@ -2,6 +2,7 @@ import time
 import pickle
 import socket
 import sys
+import random 
 from getkeys import vk
 from _thread import *
 import vjoy 
@@ -9,25 +10,25 @@ import vjoy
 def threaded_client(conn,joystickId):
 	vjoy.vj = vjoy.vJoy(joystickId)
 	while True:
-		lasttime = time.time()
+		# lasttime = time.time()
 		data = conn.recv(2048)
 		# print("data in ONE CHUCNK = [{}] ".format(data))
 		if not data:
-			break	  
+			break
+			print('break ')
 		else:
 			try:
 				keystates = pickle.loads(data)
 			except pickle.UnpicklingError:
 				keystates = "nokeys"
 			if keystates != "nokeys":
-				# handleInput(data)
-				pass
-		print('{}s'.format(time.time()-lasttime))
+				NewHandleInput(keystates)
+		# print('{}s'.format(time.time()-lasttime))
 	conn.close()
 
 def NewHandleInput(keystates):
-	pass
-
+	print(keystates)
+	print(random.randrange(0,10))
 # def handleInput(data,):
 # 	for i in data:
 # 		# time.sleep(0.0) 
