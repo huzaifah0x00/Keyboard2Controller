@@ -18,19 +18,15 @@ s.connect((host,port))
 lastkeys = ""
 while True:
 	keys = getkeys.getKeys()
-	shared_items = {k: keys[k] for k in keys if k in lastkeys and keys[k] == lastkeys[k]}
-	print(len(shared_items))
-	print(shared_items)
 	if keys != lastkeys:
-		keystosend = pickle.dumps(keys)
+		# keystosend = pickle.dumps(keys)
 		# print("sending [{}]".format(keys))
-		s.send(pickle.dumps(keystosend))
-		# print("sending keys")
+		s.send(pickle.dumps(keys))
+		print("sending keys")
 	else:
 		# print('lastkeys was [{}]\n and currentkeys was [{}]'.format(lastkeys,keys))
 		print('not sending keys ')
-		time.sleep(0.5)
 		# s.send(pickle.dumps("nokeys"))
-	lastkeys = keys
+	lastkeys = keys.copy()
 print("closing socket")
 s.close

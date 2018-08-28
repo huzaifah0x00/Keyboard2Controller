@@ -19,7 +19,7 @@ def threaded_client(conn,joystickId):
 		else:
 			try:
 				keystates = pickle.loads(data)
-			except pickle.UnpicklingError:
+			except (pickle.UnpicklingError,ValueError):
 				keystates = "nokeys"
 			if keystates != "nokeys":
 				NewHandleInput(keystates)
@@ -28,7 +28,6 @@ def threaded_client(conn,joystickId):
 
 def NewHandleInput(keystates):
 	print(keystates)
-	print(random.randrange(0,10))
 # def handleInput(data,):
 # 	for i in data:
 # 		# time.sleep(0.0) 
