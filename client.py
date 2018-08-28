@@ -9,7 +9,7 @@ if len(sys.argv) == 3:
 	port = int(sys.argv[2])
 else:
 	host = socket.gethostname()
-	port = 64129
+	port = 4444
 print("Connecting to host: {} on port: {}".format(host,port))
 i =  0
 s.connect((host,port))

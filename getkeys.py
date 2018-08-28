@@ -119,8 +119,11 @@ def getKeys():
     keys = []
     for key in keyList:
         # print(type(key))
-        if wapi.GetAsyncKeyState(key):
-            keys.append(key)
+        keystate = wapi.GetAsyncKeyState(key)
+        if keystate or not keystate:
+            # keys.append(key)
+            print(keystate,key)
     return keys
 if __name__ == '__main__':
-    getKeys()
+    while True:
+        getKeys()

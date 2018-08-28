@@ -15,11 +15,13 @@ import numpy as np
 CONST_DLL_VJOY = "vJoyInterface.dll"
 
 class vJoy(object):
-    def __init__(self, reference = 1):
+    def __init__(self,reference):
         self.handle = None
         self.dll = ctypes.CDLL( CONST_DLL_VJOY )
+        print(dir(self.dll))
         self.reference = reference
         self.acquired = False
+        print(reference)
         
     def open(self):
         if self.dll.AcquireVJD( self.reference ):
@@ -73,10 +75,8 @@ class vJoy(object):
         if self.dll.SetBtn( state, self.reference, index ):
             return True
         return False
+
                 
-
-vj = vJoy()
-
 # valueX, valueY between -1.0 and 1.0
 # scale between 0 and 16000
 def setJoy(valueX, valueY, scale):
@@ -85,7 +85,8 @@ def setJoy(valueX, valueY, scale):
     joystickPosition = vj.generateJoystickPosition(wAxisX = 16000+xPos, wAxisY = 16000+yPos)
     vj.update(joystickPosition)
 
-
+def A():
+    SendButtons()
 
 def lsUp():
     vj.open()
@@ -155,11 +156,8 @@ if __name__ == '__main__':
         print(i)
         time.sleep(1)
     
-    for i in range(200):
-        lsLeft()
-        time.sleep(0.01)
+    # for i in range(200):
+    #     lsLeft()
+    #     time.sleep(0.01)
 
-    ultimate_release()
-
-    
-        
+    # ultimate_release()
