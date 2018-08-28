@@ -13,11 +13,15 @@ else:
 print("Connecting to host: {} on port: {}".format(host,port))
 i =  0
 s.connect((host,port))
+lastkeys = ""
 while True:
 	keys = getkeys.getKeys()
-	if keys:
+	if keys != lastkeys:
 		keys = pickle.dumps(keys)
+		print("sending [{}]".format(keys))
 		s.send(keys)
 	else:
-		s.send(pickle.dumps("nokeys"))
+		# s.send(pickle.dumps("nokeys"))
+		pass
+	lastkeys = keys
 s.close

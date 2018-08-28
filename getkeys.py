@@ -117,15 +117,15 @@ keyList = []
 for char in vk:
     keyList.append(vk[char])
 # print(keyList)
+keystates= {}
 def getKeys():
     keys = []
     for key in keyList:
         # print(type(key))
         keystate = wapi.GetAsyncKeyState(key)
-        if keystate or not keystate:
-            # keys.append(key)
-            print(keystate,kv[key])
-    return keys
+        keystates[kv[key]] = keystate
+
+    return keystates
 if __name__ == '__main__':
     while True:
-        getKeys()
+        print(getKeys())
