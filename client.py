@@ -22,10 +22,11 @@ while True:
 		# keystosend = pickle.dumps(keys)
 		# print("sending [{}]".format(keys))
 		s.send(pickle.dumps(keys))
-		print("sending keys")
+		# print("sending keys")
 	else:
+		pass
 		# print('lastkeys was [{}]\n and currentkeys was [{}]'.format(lastkeys,keys))
-		print('not sending keys ')
+		# print('not sending keys ')
 		# s.send(pickle.dumps("nokeys"))
 	lastkeys = keys.copy()
 print("closing socket")

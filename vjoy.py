@@ -33,7 +33,8 @@ class vJoy(object):
             self.acquired = False
             return True
         return False
-    
+    def JoyStickState(self):
+        return self.dll.JoyStickState()
     def generateJoystickPosition(self, 
         wThrottle = 0, wRudder = 0, wAileron = 0,
 
@@ -75,17 +76,17 @@ class vJoy(object):
             return True
         return False
 
-                
+vj = vJoy(1)
 # valueX, valueY between -1.0 and 1.0
 # scale between 0 and 16000
-def setJoy(valueX, valueY, scale):
-    xPos = int(valueX*scale)
-    yPos = int(valueY*scale)
-    joystickPosition = vj.generateJoystickPosition(wAxisX = 16000+xPos, wAxisY = 16000+yPos)
-    vj.update(joystickPosition)
+# def setJoy(valueX, valueY, scale):
+#     xPos = int(valueX*scale)
+#     yPos = int(valueY*scale)
+#     joystickPosition = vj.generateJoystickPosition(wAxisX = 16000+xPos, wAxisY = 16000+yPos)
+#     vj.update(joystickPosition)
 
-def A():
-    SendButtons()
+# def A():
+#     SendButtons()
 
 def lsUp():
     vj.open()
@@ -154,7 +155,7 @@ if __name__ == '__main__':
     for i in reversed(range(1,4)):
         print(i)
         time.sleep(1)
-    
+    print(vj.JoyStickState())
     # for i in range(200):
     #     lsLeft()
     #     time.sleep(0.01)

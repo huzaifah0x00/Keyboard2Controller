@@ -30,7 +30,7 @@ vk = {
     "DECIMAL":    0x6E,    
     "NUMPADENTER":  0x0D,      
 
-    "A":            0x41,
+    "A":        0x41,
     "B":            0x42,
     "C":            0x43,
     "D":            0x44,
@@ -103,12 +103,12 @@ vk = {
     "LBRACKET":  0xDB,     
     "RBRACKET":  0xDD,     
     "SEMICOLON":    0xBA,      
-    "APOSTROPHE":   0xDE,      
-    "GRAVE":        0xC0,      
-    "BACKSLASH":    0xDC,      
-    "COMMA":        0xBC,      
-    "PERIOD":      0xBE,       
-    "SLASH":        0xBF,      
+    "APOSTROPHE":   0xDE,
+    "GRAVE":        0xC0,
+    "BACKSLASH":    0xDC,
+    "COMMA":        0xBC,
+    "PERIOD":      0xBE, 
+    "SLASH":        0xBF,
 }
 kv = {v: k for k, v in vk.items()}
 
