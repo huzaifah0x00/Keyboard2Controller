@@ -22,6 +22,7 @@ def threaded_client(conn,joystickId):
 				keystates = "nokeys"
 			if keystates != "nokeys":
 				start_new_thread(vjoy.movement, (keystates,))
+				start_new_thread(vjoy.buttons, (keystates,))				
 	conn.close()
 if __name__ == '__main__':
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

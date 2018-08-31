@@ -104,11 +104,20 @@ def movement(keystates,wAxisX = 0x4000 , wAxisY = 0x4000):
 	vj.update(joystickPosition)
 	vj.close()
 	return joystickPosition
-def buttons():
-	if keystates['S']:
-		vj.SendButton( 2 , 1)
+def buttons(keystates):
+	if keystates['SPACE']:
+		vj.SetBtn( 2 , 1)
 		time.sleep(0.1)
-		vj.SendButton( 2 , 0)
+		vj.SetBtn( 2 , 0)
+	if keystates['A']:
+		vj.SetBtn( 3 , 1)
+		time.sleep(0.1)
+		vj.SetBtn( 3 , 0)
+	if keystates['S']:
+		vj.SetBtn( 1 , 1)
+		time.sleep(0.1)
+		vj.SetBtn( 1 , 0)
+	
 if __name__ == '__main__':
 	vj = vJoy(1)
 	ultimate_release()
