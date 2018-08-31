@@ -107,17 +107,24 @@ def movement(keystates,wAxisX = 0x4000 , wAxisY = 0x4000):
 def buttons(keystates):
 	if keystates['SPACE']:
 		vj.setButton( 2 , 1)
-		time.sleep(0.1)
+		time.sleep(0.3)
 		vj.setButton( 2 , 0)
-	if keystates['A']:
-		vj.setButton( 3 , 1)
-		time.sleep(0.1)
-		vj.setButton( 3 , 0)
 	if keystates['S']:
+		vj.setButton( 3 , 1)
+		time.sleep(0.3)
+		vj.setButton( 3 , 0)
+	if keystates['W']:
 		vj.setButton( 1 , 1)
-		time.sleep(0.1)
+		time.sleep(0.3)
 		vj.setButton( 1 , 0)
-	
+	if keystates['D']:
+		vj.setButton( 4 , 1)
+		time.sleep(0.3)
+		vj.setButton( 4 , 0)
+	if keystates['A']:
+		vj.setButton( 5 , 1)
+		time.sleep(0.3)
+		vj.setButton( 5 , 0)
 if __name__ == '__main__':
 	vj = vJoy(1)
 	ultimate_release()
