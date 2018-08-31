@@ -46,7 +46,7 @@ def NewHandleInput(keystates):
 		vjoy.lsLeft()
 	elif keystates['RIGHT'] == 1:
 		vjoy.lsRight()
-	
+
 # def handleInput(data,):
 # 	for i in data:
 # 		# time.sleep(0.0) 
