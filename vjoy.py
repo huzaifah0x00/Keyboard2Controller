@@ -66,29 +66,6 @@ class vJoy(object):
 		if self.dll.SetBtn( state, self.reference, index ):
 			return True
 		return False
-print("bla")
-def movement(keystates):
-	vj.open()
-	print("vj opening")
-	if keystates['UP'] and not keystates['DOWN']:
-		wAxisY = 0x8000
-	# else:
-	# 	wAxisY = 0x4000
-	elif keystates['DOWN'] and not keystates['UP']:
-		wAxisY = 0x1
-	else:
-		wAxisY = 0x4000
-	if keystates['LEFT'] and not keystates['RIGHT']:
-		wAxisX = 0x1
-	else:
-		wAxisX = 0x4000
-	if keystates['RIGHT'] and not keystates['LEFT']:
-		wAxisX = 0x8000
-	joystickPosition = vj.generateJoystickPosition(wAxisX= wAxisX , wAxisY=wAxisY)
-	print(struct.unpack("BlllllllllllllllllllIIII",joystickPosition))
-	vj.update(joystickPosition)
-	vj.close()
-	return joystickPosition
 def ultimate_release():
 	vj.open()
 	joystickPosition = vj.generateJoystickPosition()
@@ -97,6 +74,41 @@ def ultimate_release():
 	vj.close()
 	return joystickPosition
 
+def movement(keystates,wAxisX = 0x4000 , wAxisY = 0x4000):
+	vj.open()
+	print("vj opening")
+	# wAxisY = 0x4000
+	# wAxisX = 0x4000
+	if keystates['UP'] and not keystates['DOWN']:   # and wAxisY != 0x1 :
+		wAxisY = 0x1
+	else:
+		pass
+		# wAxisY = 0x4000
+	if keystates['DOWN'] and not keystates['UP']: # and wAxisY != 0x8000:
+		wAxisY = 0x8000
+	else:
+		pass
+		# wAxisY = 0x4000
+	if keystates['LEFT'] and not keystates['RIGHT']:	# and wAxisX != 0x1:
+		wAxisX = 0x1
+	else:
+		pass
+		# wAxisX = 0x4000
+	if keystates['RIGHT'] and not keystates['LEFT']:  #and wAxisX != 0x8000:
+		wAxisX = 0x8000
+	else:
+		pass
+		# wAxisX = 0x4000
+	joystickPosition = vj.generateJoystickPosition(wAxisX= wAxisX , wAxisY=wAxisY)
+	print(struct.unpack("BlllllllllllllllllllIIII",joystickPosition))
+	vj.update(joystickPosition)
+	vj.close()
+	return joystickPosition
+def buttons():
+	if keystates['S']:
+		vj.SendButton( 2 , 1)
+		time.sleep(0.1)
+		vj.SendButton( 2 , 0)
 if __name__ == '__main__':
 	vj = vJoy(1)
 	ultimate_release()

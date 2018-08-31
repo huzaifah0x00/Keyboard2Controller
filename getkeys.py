@@ -118,10 +118,10 @@ keystates= {}
 def getKeys():
 	for key in keyList:
 		keystate = wapi.GetAsyncKeyState(key)
-		if keystate == -32768 or keystate == 1:
-			keystate = 1
-		else:
-			keystate = 0
+		# if keystate == -32768 or keystate == 1:
+		# 	keystate = 1
+		# else:
+		# 	keystate = 0
 		keystates[kv[key]] = keystate
 
 	return keystates

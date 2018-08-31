@@ -17,17 +17,21 @@ i =  0
 s.connect((host,port))
 lastkeys = ""
 while True:
-	keys = getkeys.getKeys()
-	if keys != lastkeys:
+	keys = getkeys.getKeys() # = 1 
+	if keys != lastkeys :
+		# time.sleep(0.1)
+		print('lastkeys was [{}]\n and currentkeys was [{}]'.format(lastkeys,keys))
 		# keystosend = pickle.dumps(keys)
 		# print("sending [{}]".format(keys))
 		s.send(pickle.dumps(keys))
 		# print("sending keys")
 	else:
 		pass
+		# keys = getkeys.getKeys() doesn't work either
 		# print('lastkeys was [{}]\n and currentkeys was [{}]'.format(lastkeys,keys))
 		# print('not sending keys ')
 		# s.send(pickle.dumps("nokeys"))
-	lastkeys = keys.copy()
+	lastkeys = keys.copy() # keys.copy() # up = 1 
+	# print(type(lastkeys))
 print("closing socket")
 s.close
