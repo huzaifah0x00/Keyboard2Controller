@@ -3,6 +3,7 @@ import pickle
 import socket
 import sys
 import random 
+import struct
 from getkeys import vk
 from _thread import start_new_thread
 import vjoy 
@@ -10,9 +11,7 @@ import vjoy
 def threaded_client(conn,joystickId):
 	vjoy.vj = vjoy.vJoy(joystickId)
 	while True:
-		# lasttime = time.time()
 		data = conn.recv(2048)
-		# print("data in ONE CHUCNK = [{}] ".format(data))
 		if not data:
 			print('break ')
 			break
@@ -22,81 +21,8 @@ def threaded_client(conn,joystickId):
 			except (pickle.UnpicklingError,ValueError):
 				keystates = "nokeys"
 			if keystates != "nokeys":
-				NewHandleInput(keystates)
-		# print('{}s'.format(time.time()-lasttime))
+				vjoy.movement(keystates)
 	conn.close()
-
-def NewHandleInput(keystates):
-	lastkeystates=keystates.copy()
-	if keystates['UP'] == 1 :
-		if keystates['LEFT'] ==1 :
-			vjoy.lsUpLeft()
-		elif keystates['RIGHT'] == 1:
-			vjoy.lsUpRight()
-		else:
-			vjoy.lsUp()
-	if keystates['DOWN'] == 1 :
-		if keystates['LEFT'] ==1 :
-			vjoy.lsDownLeft()
-		elif keystates['RIGHT'] == 1:
-			vjoy.lsDownRight()
-		else:
-			vjoy.lsDown()
-	if keystates['LEFT'] ==1 :
-		vjoy.lsLeft()
-	elif keystates['RIGHT'] == 1:
-		vjoy.lsRight()
-
-# def handleInput(data,):
-# 	for i in data:
-# 		# time.sleep(0.0) 
-		
-# 		if vk['UP'] in data:
-# 			if vk['UP'] and vk['RIGHT'] in data:
-# 				vjoy.lsUpRight()
-# 			elif vk['UP'] and vk['LEFT'] in data:
-# 				vjoy.lsUpLeft()
-			
-# 			else:
-# 				print("UP 'cause the data is [{}] and i is [{}]".format(data,i))
-# 				start_new_thread(vjoy.lsUp,())
-# 				# vjoy.lsUp()
-# 			time.sleep(0)
-# 			# vjoy.LsReset()
-# 		if vk['DOWN'] in data:
-# 			if vk['DOWN'] and vk['RIGHT'] in data:
-# 				vjoy.lsDownRight()
-# 			elif vk['DOWN'] and vk['LEFT'] in data:
-# 				vjoy.lsDownLeft()
-# 			else:
-# 				print("DOWN 'cause the data is [{}] and i is [{}]".format(data,i))
-# 				start_new_thread(vjoy.lsDown,())
-# 				# vjoy.lsDown()
-# 			time.sleep(0)
-# 		if vk['LEFT'] in data :
-# 			if vk['LEFT'] and vk['DOWN'] in data:
-# 				vjoy.lsDownLeft()
-# 			elif vk['LEFT'] and vk['UP'] in data:
-# 				vjoy.lsUpLeft()
-# 			else:
-# 				print("LEFT 'cause the data is [{}] and i is [{}]".format(data,i))
-# 				start_new_thread(vjoy.lsLeft,())
-# 				# vjoy.lsLeft()
-# 			time.sleep(0)
-# 			# vjoy.LsReset()
-		
-# 		if vk['RIGHT'] in data:
-# 			if vk['RIGHT'] and vk['DOWN'] in data:
-# 				vjoy.lsDownRight()
-# 			elif vk['RIGHT'] and vk['UP'] in data:
-# 				vjoy.lsUpRight()
-# 			else:
-# 				print("RIGHT 'cause the data is [{}] and i is [{}]".format(data,i))
-# 				start_new_thread(vjoy.lsRight,())
-# 				# vjoy.lsRight()
-# 			time.sleep(0)
-# 		vjoy.ultimate_release()
-
 if __name__ == '__main__':
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	host = socket.gethostname()
