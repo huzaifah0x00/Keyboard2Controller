@@ -4,7 +4,7 @@ import socket
 import sys
 import random 
 from getkeys import vk
-from _thread import *
+from _thread import start_new_thread
 import vjoy 
 
 def threaded_client(conn,joystickId):
@@ -14,8 +14,8 @@ def threaded_client(conn,joystickId):
 		data = conn.recv(2048)
 		# print("data in ONE CHUCNK = [{}] ".format(data))
 		if not data:
-			break
 			print('break ')
+			break
 		else:
 			try:
 				keystates = pickle.loads(data)
@@ -27,31 +27,26 @@ def threaded_client(conn,joystickId):
 	conn.close()
 
 def NewHandleInput(keystates):
-	print(keystates)
-	if keystates['UP'] == -0x8000:
-		print('up pressed')
-	if keystates['DOWN'] == -0x8000:
-		print('Down pressed')
-	if keystates['LEFT'] == -0x8000:
-		print('left pressed')
-	if keystates['RIGHT'] == -0x8000:
-		print('right pressed')
-	if keystates['W'] == -0x8000:
-		print('w pressed')
-	if keystates['S'] == -0x8000:
-		print('s pressed')
-	if keystates['A'] == -0x8000:
-		print('a pressed')
-	if keystates['D'] == -0x8000:
-		print('d pressed')
-	if keystates['Q'] == -0x8000:
-		print('Q pressed')
-	if keystates['LCONTROL'] == -0x8000:
-		print('LCONTROL pressed')
-	if keystates['LSHIFT'] == -0x8000:
-		print('LSHIFT pressed')
-	if keystates['R'] == -0x8000:
-		print('R pressed')
+	lastkeystates=keystates.copy()
+	if keystates['UP'] == 1 :
+		if keystates['LEFT'] ==1 :
+			vjoy.lsUpLeft()
+		elif keystates['RIGHT'] == 1:
+			vjoy.lsUpRight()
+		else:
+			vjoy.lsUp()
+	if keystates['DOWN'] == 1 :
+		if keystates['LEFT'] ==1 :
+			vjoy.lsDownLeft()
+		elif keystates['RIGHT'] == 1:
+			vjoy.lsDownRight()
+		else:
+			vjoy.lsDown()
+	if keystates['LEFT'] ==1 :
+		vjoy.lsLeft()
+	elif keystates['RIGHT'] == 1:
+		vjoy.lsRight()
+
 # def handleInput(data,):
 # 	for i in data:
 # 		# time.sleep(0.0) 
