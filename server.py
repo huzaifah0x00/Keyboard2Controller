@@ -9,7 +9,7 @@ from _thread import start_new_thread
 import vjoy 
 
 def threaded_client(conn,joystickId):
-	vjoy.vj = vjoy.vJoy(joystickId)
+	vj = vjoy.vJoy(joystickId)
 	while True:
 		data = conn.recv(2048)
 		if not data:
@@ -18,11 +18,12 @@ def threaded_client(conn,joystickId):
 		else:
 			try:
 				keystates = pickle.loads(data)
+
 			except (pickle.UnpicklingError,ValueError):
 				keystates = "nokeys"
 			if keystates != "nokeys":
-				start_new_thread(vjoy.movement, (keystates,))
-				start_new_thread(vjoy.buttons, (keystates,))				
+				start_new_thread(vj.movement, (keystates,))
+				start_new_thread(vj.buttons, (keystates,))
 	conn.close()
 if __name__ == '__main__':
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,4 +43,3 @@ if __name__ == '__main__':
 		print('connected to: '+addr[0]+':'+str(addr[1]))
 		print('Waiting for Keystrokes From: ' + str(addr[0]))
 		start_new_thread(threaded_client,(conn,joystickId),)
-		
