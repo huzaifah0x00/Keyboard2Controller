@@ -32,26 +32,26 @@ class vJoy:
 		self.j.update()
 		return self.j.data
 	def buttons(self, keystates):
-		if keystates['SPACE']:
+		if keystates['SPACE']: 
 			print("pressing B")
-			self.j.set_button( 2 , 1)
+			self.j.set_button( 2 , 1) #BUTTON B
 			# time.sleep(0.3)
 		else:
 			print("Releasing B")
 			self.j.set_button( 2 , 0)
-		if keystates['S']:
-			self.j.set_button( 3 , 1)
+		if keystates['S']: 
+			self.j.set_button( 3 , 1) #BUTTON A
 			# time.sleep(0.3)
 		else:
 			print("Releasing 3 ")
 			self.j.set_button( 3 , 0)
-		if keystates['W']:
-			self.j.set_button( 1 , 1)
+		if keystates['W']: 
+			self.j.set_button( 1 , 1) #BUTTON Y
 			# time.sleep(0.3)
 		else:
 			self.j.set_button( 1 , 0)
-		if keystates['A']:
-			self.j.set_button( 4 , 1)
+		if keystates['A']: 
+			self.j.set_button( 4 , 1) #BUTTON X
 			# time.sleep(0.3)
 		else:
 			self.j.set_button( 4 , 0)
