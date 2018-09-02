@@ -3,7 +3,7 @@ import socket
 import pickle
 import getkeys 
 import sys
-import time 
+import time
 print(sys.argv)
 s = socket.socket()
 if len(sys.argv) == 3:
