@@ -23,5 +23,6 @@ while True:
 	else:
 		pass
 	lastkeys = keys.copy() 
+	time.sleep(0.0005)
 print("closing socket")
 s.close
