@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 import socket
 import sys
@@ -14,7 +15,7 @@ def threaded_client(conn):
 			break
 		else:
 			try:
-				pixels = np.nsarray.frombuffer(pixdata)
+				pixels = pixdata
 				# pixels  = pixdata
 			except:
 				pixels = "Nope"
@@ -22,6 +23,7 @@ def threaded_client(conn):
 			if pixels != "Nope":
 				framecount += 1
 				print(f"We've Recieved {framecount} frames So Far ! of type {type(pixels)} looking like \n[{pixels}]\n")
+				cv2.imshow('a', pixels)
 	conn.close()
 if __name__ == '__main__':
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
