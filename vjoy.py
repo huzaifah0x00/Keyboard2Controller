@@ -1,9 +1,42 @@
 import pyvjoy 
+from buttonconfig import buttonconfig
 
 class vJoy:
 	def __init__(self,joystickId):
 	   self.j = pyvjoy.VJoyDevice(joystickId)
-	def movement(self, keystates, wAxisX = 0x4000 , wAxisY = 0x4000):
+	   BUTTONS = {
+	   # 			"Y_AXIS" : self.j.data.wAxisY,
+				# "X_AXIS" : self.j.data.wAxisX,
+				"Y" : 1,
+				"B" : 2,
+				"A" : 3,
+				"X" : 4,
+				"RT" : 5,
+				"LT" : 6,
+				"RB" : 7,
+				"LB" : 8,
+				"DPAD_UP" : 9,
+				"DPAD_DOWN" : 10,
+				"DPAD_LEFT" : 11,
+				"DPAD_RIGHT" : 12,
+			}
+	def handle_buttons(self, keystates):
+		pressedbuttons = [i for i,v in keystates.items() if v]
+		unpressedbuttons = [i for i,v in keystates.items() if not v]
+		for un_button in unpressedbuttons:
+			try:
+				self.j.set_button(buttonconfig[un_button],0)
+			except KeyError:
+				pass
+
+		for p_button in pressedbuttons:
+			try:
+				self.j.set_button(buttonconfig[p_button],1)
+			except KeyError:
+				print("No Config defined for this button ({})".format(p_button))
+
+
+	def handle_movement(self, keystates, wAxisX = 0x4000 , wAxisY = 0x4000):
 		self.j.data.wAxisY = wAxisY
 		self.j.data.wAxisX = wAxisX
 		if keystates['UP'] and not keystates['DOWN']:   # and wAxisY != 0x1 :
@@ -31,51 +64,3 @@ class vJoy:
 			pass
 		self.j.update()
 		return self.j.data
-	def buttons(self, keystates):
-		if keystates['W']: 
-			self.j.set_button( 1 , 1) #BUTTON Y
-			# time.sleep(0.3)
-		else:
-			self.j.set_button( 1 , 0)
-		if keystates['SPACE']: 
-			print("pressing B")
-			self.j.set_button( 2 , 1) #BUTTON B
-			# time.sleep(0.3)
-		else:
-			print("Releasing B")
-			self.j.set_button( 2 , 0)
-		if keystates['S']: 
-			self.j.set_button( 3 , 1) #BUTTON A
-			# time.sleep(0.3)
-		else:
-			print("Releasing 3 ")
-			self.j.set_button( 3 , 0)
-		
-		if keystates['A']: 
-			self.j.set_button( 4 , 1) #BUTTON X
-			# time.sleep(0.3)
-		else:
-			self.j.set_button( 4 , 0)
-		if keystates['5']: 
-			print("pressing 5")
-			self.j.set_button( 5 , 1) #BUTTON
-			# time.sleep(0.3)
-		else:
-			print("Releasing 5")
-			self.j.set_button( 5 , 0)
-		if keystates['LSHIFT']: 
-			self.j.set_button( 6 , 1) #BUTTON RT
-			# time.sleep(0.3)
-		else:
-			print("Releasing 6 ")
-			self.j.set_button( 6 , 0)
-		if keystates['R']: 
-			self.j.set_button( 7 , 1) #BUTTON LB
-			# time.sleep(0.3)
-		else:
-			self.j.set_button( 7 , 0)
-		if keystates['8']: 
-			self.j.set_button( 8 , 1) #BUTTON LB
-			# time.sleep(0.3)
-		else:
-			self.j.set_button( 8 , 0)
