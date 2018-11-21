@@ -28,21 +28,18 @@ class vJoy:
 	def handle_buttons(self, keystates):
 		pressedbuttons = [i for i,v in keystates.items() if v]
 		unpressedbuttons = [i for i,v in keystates.items() if not v]
+		buttonstopress = 0
 		for p_button in pressedbuttons:
 			try:
 				vj_button = self.BUTTONS[buttonconfig[p_button]]
 				# print(f"PRESSING BUTTPNS {vj_button}" )
-				self.j.set_button(vj_button,1)
+				# self.j.set_button(vj_button,1)
+				buttonstopress += 2**(vj_button-1)
 			except KeyError:
-				pass
 				# print("No Config defined for this button ({})".format(p_button))
-
-		for un_button in unpressedbuttons:
-			try:
-				vj_button = self.BUTTONS[buttonconfig[un_button]]
-				self.j.set_button(vj_button,0)
-			except KeyError:
 				pass
+		self.j.data.lButtons = buttonstopress
+		self.j.update()
 
 
 	def handle_movement(self, keystates, wAxisX = 0x4000 , wAxisY = 0x4000):

@@ -25,7 +25,7 @@ while True:
 	keys = getkeys.getKeys() 
 	if keys != lastkeys :
 		s.send(pickle.dumps(keys))
-		print(f"sent keys at {time.asctime()}")
+		# print(f"sent keys at {time.time()}")
 	else:
 		pass
 	lastkeys = keys.copy()
