@@ -15,10 +15,15 @@ class vJoy:
 				"LT" : 6,
 				"RB" : 7,
 				"LB" : 8,
-				"DPAD_UP" : 9,
-				"DPAD_DOWN" : 10,
-				"DPAD_LEFT" : 11,
-				"DPAD_RIGHT" : 12,
+				"START" : 9,
+				"SELECT" : 10,
+				"LS" : 11,
+				"RS" : 12,
+				"DPAD_UP" :  29 ,
+				"DPAD_DOWN" : 30 ,
+				"DPAD_LEFT" : 31 ,
+				"DPAD_RIGHT" : 32 ,
+
 			}
 	def handle_buttons(self, keystates):
 		pressedbuttons = [i for i,v in keystates.items() if v]
@@ -45,6 +50,7 @@ class vJoy:
 		self.j.data.wAxisX = wAxisX
 		if keystates['UP'] and not keystates['DOWN']:   # and wAxisY != 0x1 :
 			wAxisY = 0x1
+			self.j.set_disc_pov(1,1)
 			self.j.data.wAxisY = wAxisY
 		else:
 			pass
