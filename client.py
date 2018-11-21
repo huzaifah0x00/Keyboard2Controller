@@ -14,15 +14,21 @@ else:
 	port = 4444
 print("Connecting to host: {} on port: {}".format(host,port))
 i =  0
-s.connect((host,port))
+try:
+	s.connect((host,port))
+	print("Connected succesfully")
+except:
+	print("Error Connecting")
+
 lastkeys = ""
 while True:
 	keys = getkeys.getKeys() 
 	if keys != lastkeys :
 		s.send(pickle.dumps(keys))
+		print(f"sent keys at {time.asctime()}")
 	else:
 		pass
-	lastkeys = keys.copy() 
+	lastkeys = keys.copy()
 	time.sleep(0.0005)
 print("closing socket")
 s.close

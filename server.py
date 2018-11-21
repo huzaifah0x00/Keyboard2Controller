@@ -22,8 +22,10 @@ def threaded_client(conn,joystickId):
 			except (pickle.UnpicklingError,ValueError):
 				keystates = "nokeys"
 			if keystates != "nokeys":
+				print(f"called handling funcitons at {time.asctime()}")
 				vj.handle_movement(keystates)
 				vj.handle_buttons(keystates)
+				print(f"handling funcitons done at {time.asctime()}")
 	conn.close()
 if __name__ == '__main__':
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

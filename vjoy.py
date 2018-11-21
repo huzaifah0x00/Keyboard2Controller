@@ -26,10 +26,11 @@ class vJoy:
 		for p_button in pressedbuttons:
 			try:
 				vj_button = self.BUTTONS[buttonconfig[p_button]]
-				print(f"PRESSING BUTTPNS {vj_button}" )
+				# print(f"PRESSING BUTTPNS {vj_button}" )
 				self.j.set_button(vj_button,1)
 			except KeyError:
-				print("No Config defined for this button ({})".format(p_button))
+				pass
+				# print("No Config defined for this button ({})".format(p_button))
 
 		for un_button in unpressedbuttons:
 			try:
