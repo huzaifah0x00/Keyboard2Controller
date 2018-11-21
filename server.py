@@ -23,7 +23,6 @@ def threaded_client(conn,joystickId):
 				keystates = "nokeys"
 			if keystates != "nokeys":
 				# print(f"called handling funcitons at {time.asctime()}")
-				vj.handle_movement(keystates)
 				vj.handle_buttons(keystates)
 				# print(f"handling funcitons done at {time.asctime()}")
 	conn.close()
